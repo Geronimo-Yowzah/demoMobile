@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -33,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     TextView textView;
     EditText inputText;
 
+    TextView okay_text, cancel_text;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
 
         adapter = new MyRecyclerAdapter(strings);
         recyclerView.setAdapter(adapter);
+//dialog
+        Dialog dialog = new Dialog(MainActivity.this);
 
         client = new OkHttpClient();
         textView = findViewById(R.id.textData);
@@ -75,7 +81,41 @@ public class MainActivity extends AppCompatActivity {
                         PostAdapter PostAdapter = new PostAdapter(MainActivity.this, postList, new PostAdapter.PostAdapterListener() {
                             @Override
                             public void onClicked(Post data) {
-                                Toast.makeText(MainActivity.this, data.getId(), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(MainActivity.this, data.getId(), Toast.LENGTH_SHORT).show();
+                                dialog.setContentView(R.layout.dialog);
+                                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                dialog.setCancelable(false);
+                                dialog.getWindow().getAttributes().windowAnimations = R.style.animation;
+                                TextView userId = dialog.findViewById(R.id.userIdText);
+                                TextView id = dialog.findViewById(R.id.IdText);
+                                TextView title = dialog.findViewById(R.id.TitleText);
+                                TextView body = dialog.findViewById(R.id.BodyText);
+
+                                userId.setText("User ID : " + data.getUserId());
+                                id.setText("ID : " + data.getId());
+                                title.setText("Title : " + data.getTitle());
+                                body.setText("Body : " + data.getBody());
+
+
+                                okay_text = dialog.findViewById(R.id.okay_text);
+                                cancel_text = dialog.findViewById(R.id.cancel_text);
+
+                                okay_text.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        dialog.dismiss();
+                                        Toast.makeText(MainActivity.this, "okay clicked", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+                                cancel_text.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        dialog.dismiss();
+                                        Toast.makeText(MainActivity.this, "Cancel clicked", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                dialog.show();
                             }
                         });
                         recyclerView.setAdapter(PostAdapter);
