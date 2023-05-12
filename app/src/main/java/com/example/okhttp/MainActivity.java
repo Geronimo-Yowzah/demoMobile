@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                         PostAdapter PostAdapter = new PostAdapter(MainActivity.this, postList, new PostAdapter.PostAdapterListener() {
                             @Override
                             public void onClicked(Post data) {
-                                Toast.makeText(MainActivity.this, data.getUserId(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, data.getId(), Toast.LENGTH_SHORT).show();
                             }
                         });
                         recyclerView.setAdapter(PostAdapter);
