@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,15 @@ public class MainActivity extends AppCompatActivity {
         client = new OkHttpClient();
         textView = findViewById(R.id.textData);
         Button btnGet = findViewById(R.id.btnGet);
+        Button btnLogin = findViewById(R.id.btnLogin);
 
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this,LoginActivity.class);
+                startActivity(i);
+            }
+        });
 
         btnGet.setOnClickListener(new View.OnClickListener() {
             @Override
